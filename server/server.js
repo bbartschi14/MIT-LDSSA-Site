@@ -17,6 +17,7 @@
 // this is a tool provided by staff, so you don't need to worry about it
 const validator = require("./validator");
 validator.checkSetup();
+require('dotenv').config();
 
 //import libraries needed for the webserver to work!
 const http = require("http");
@@ -34,8 +35,7 @@ const socketManager = require("./server-socket");
 
 // Server configuration below
 // TODO change connection URL after setting up your own database
-const mongoConnectionURL =
-  "mongodb+srv://bbartschi14:rag11421@cluster0-r6ehc.mongodb.net/test?retryWrites=true&w=majority";
+const mongoConnectionURL = process.env.ATLAS_SRV;
 // TODO change database name to the name you chose
 const databaseName = "ldssa";
 
@@ -60,7 +60,7 @@ app.use(bodyParser.json());
 // set up a session, which will persist login data across requests
 app.use(
   session({
-    secret: "session-secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
