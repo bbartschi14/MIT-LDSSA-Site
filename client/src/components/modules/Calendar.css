@@ -1,0 +1,118 @@
+body {
+  --grey-100: #e4e9f0;
+  --grey-200: #cfd7e3;
+  --grey-300: #b5c0cd;
+  --grey-800: #3e4e63;
+  --grid-gap: 5px;
+  --day-label-size: 20px;
+}
+
+ol, li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.Calendar-main {
+  position: relative;
+  background-color: var(--grey-200);
+  border: solid 5px var(--grey-200);
+  width: 740px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.Calendar-monthHeader {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.Calendar-selectedMonth {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.Calendar-monthHeaderSelectors {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 200px;
+}
+
+.Calendar-selector {
+  padding: 4px 14px;
+  background-color: var(--secondary);
+  color: white;
+  font-weight: 600;
+  margin: 5px;
+  border-radius: 4px;
+}
+
+.Calendar-selector:hover {
+  background-color: var(--secondary-light);
+  cursor: pointer;
+}
+
+.Calendar-daysOfWeek > * {
+  text-align: right;
+  padding-right: 5px;
+}
+
+.Calendar-daysOfWeek,
+.Calendar-daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.Calendar-daysGrid {
+  height: 85%;
+  position: relative;
+  grid-column-gap: var(--grid-gap);
+  grid-row-gap: var(--grid-gap);
+  border-top: solid 1px var(--grey-200);
+  background-color: var(--grey-200);
+
+}
+
+
+
+.Calendar-day {
+  position: relative;
+  font-size: 16px;
+  background-color: #fff;
+  color: var(--grey-800);
+  padding: 5px;
+}
+
+.Calendar-notCurrent {
+  background-color: var(--grey-100);
+  color: var(--grey-300);
+}
+
+.Calendar-day > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 2px;
+  width: var(--day-label-size);
+  height: var(--day-label-size);
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.extra {
+  color: rgb(231, 182, 182)
+}

@@ -5,10 +5,41 @@
   height: 600px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Activities-horizontalContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .Activities-title {
   font-size: var(--xxl);
   text-align: center;
   margin: 20px ;
+}
+
+.Activities-list {
+  background-color: #efefef;
+  width: 300px;
+  height: 450px;
+  margin-right: 12px;
+}
+
+.Activities-indivPanel {
+  padding: 5px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.Activities-indivPanel:hover {
+  cursor: pointer;
+}
+
+.Activities-indivTitle {
+  font-weight: 600;
 }
