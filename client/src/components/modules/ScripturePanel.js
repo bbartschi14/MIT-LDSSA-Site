@@ -80,7 +80,7 @@ class ScripturePanel extends Component {
     var date = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
     var dateArray = date.split("/");
     var year = dateArray[2].substring(0,4);
-    var day = "10".padStart(2, "0");
+    var day = dateArray[1].padStart(2, "0");
     var month = dateArray[0].padStart(2, "0");
 
     this.setState({

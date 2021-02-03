@@ -14,7 +14,7 @@ class CommentsArea extends Component {
   }
 
   componentDidMount() {
-    get("/api/comment", { date: "01/01/2020" }).then((comments) => {
+    get("/api/comment", { date: this.props.date }).then((comments) => {
       this.setState({
         comments: comments,
       });
