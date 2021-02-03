@@ -22,7 +22,7 @@
 
 .ScripturePanel-dateCardContainer {
   position: absolute;
-  height: 100px;
+  height: 80px;
   right: 10px;
   display: flex;
   flex-direction: row;
@@ -36,13 +36,13 @@
   padding: 8px 12px;
   margin-right: 4px;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: var(--m);
   font-weight: 600;
 }
 
 .ScripturePanel-dateCardSeparator {
   padding: 8px 12px;
-  font-size: var(--xl);
+  font-size: var(--l);
   font-weight: 300;
 }
 
@@ -75,18 +75,18 @@
 }
 .ScripturePanel-verse-text {
   margin: 10px 0px;
-  font-size: var(--l);
+  font-size: var(--m2);
   
 }
 
 .ScripturePanel-verse-title {
   margin: 10px 0px;
-  font-size: var(--l);
+  font-size: var(--m2);
 
 }
 
 .ScripturePanel-title {
-  font-size: var(--xxl);
+  font-size: var(--xl);
   text-align: center;
   margin: 20px ;
 }
@@ -94,8 +94,8 @@
 .ScripturePanel-setScriptureButton {
   color: white;
   margin-top: 50px;
-  font-size: var(--l);
-  padding: 15px 70px;
+  font-size: var(--m2);
+  padding: 15px 60px;
   background-color: var(--secondary);
   border-radius: 15px;
   box-shadow: 0px 0px 10px rgb(128, 128, 128);

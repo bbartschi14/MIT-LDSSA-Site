@@ -9,7 +9,7 @@
 }
 
 .Hero-text {
-  font-size: var(--xl);
+  font-size: var(--l);
   color: white;
   max-width: 800px;
 }

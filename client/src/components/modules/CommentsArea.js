@@ -14,6 +14,7 @@ class CommentsArea extends Component {
   }
 
   componentDidMount() {
+    console.log("Getting comments from " + this.props.date)
     get("/api/comment", { date: this.props.date }).then((comments) => {
       this.setState({
         comments: comments,
@@ -28,18 +29,26 @@ class CommentsArea extends Component {
   };
 
   render() {
+    var commentBlock = null
+    if (this.state.comments.length == 0 ) {
+      commentBlock = <div className="CommentsArea-comment">
+                      <div className="Comment-content">There are no comments to display</div>
+                    </div>
+    } else {
+      commentBlock = this.state.comments.map((comment) => (
+                      <SingleComment
+                        key={`SingleComment_${comment._id}`}
+                        _id={comment._id}
+                        creator_name={comment.creator_name}
+                        creator_id={comment.creator_id}
+                        content={comment.content}
+                      />
+                    ))
+    }
     return (
       <div className="CommentsArea-mainContainer">
         <div className="CommentsArea-allComments">
-          {this.state.comments.map((comment) => (
-              <SingleComment
-                key={`SingleComment_${comment._id}`}
-                _id={comment._id}
-                creator_name={comment.creator_name}
-                creator_id={comment.creator_id}
-                content={comment.content}
-              />
-            ))}
+          {commentBlock}
         </div>
         <div className="CommentsArea-newCommentContainer">
           {this.props.userId && (

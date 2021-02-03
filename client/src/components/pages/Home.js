@@ -16,13 +16,24 @@ class Home extends Component {
     document.title = "MIT LDSSA";
   }
 
+  getDate = () => {
+    var date = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+    var dateArray = date.split("/");
+    var year = dateArray[2].substring(0,4);
+    var day = dateArray[1].padStart(2, "0");
+    var month = dateArray[0].padStart(2, "0");
+
+    
+    return month+"/"+day+"/"+year
+    
+  };
 
   render() {
-    
+    var date = this.getDate();
     return (
       <>
         <Hero/>
-        <ScripturePanel userId={this.props.userId}/>
+        <ScripturePanel userId={this.props.userId} date={date}/>
         <Activities/>
       </>
     );

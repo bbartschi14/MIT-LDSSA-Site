@@ -16,7 +16,6 @@ class ScripturePanel extends Component {
       scriptureName:"",
       validScripture:false,
       scriptureText:null,
-      date:"01/01/2021"
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.setScripture = this.setScripture.bind(this);
@@ -76,23 +75,11 @@ class ScripturePanel extends Component {
     return book + " " + chapter + ":" + verse
   }
 
-  setDate = () => {
-    var date = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
-    var dateArray = date.split("/");
-    var year = dateArray[2].substring(0,4);
-    var day = dateArray[1].padStart(2, "0");
-    var month = dateArray[0].padStart(2, "0");
-
-    this.setState({
-      date:month+"/"+day+"/"+year
-    });
-  };
-
+  
   componentDidMount() {
     let verse = "1 Nephi 3:7"
     //const start = Date.now();
     this.setScripture(verse);
-    this.setDate();
   }
 
   render() {
@@ -145,18 +132,18 @@ class ScripturePanel extends Component {
           </div>
 
           <div className="ScripturePanel-dateCardContainer">
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(0,1)}</div>
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(1,2)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(0,1)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(1,2)}</div>
             <div className="ScripturePanel-dateCardSeparator">/</div>
 
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(3,4)}</div>
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(4,5)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(3,4)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(4,5)}</div>
             <div className="ScripturePanel-dateCardSeparator">/</div>
 
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(6,7)}</div>
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(7,8)}</div>
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(8,9)}</div>
-            <div className="ScripturePanel-dateCard">{this.state.date.substring(9,10)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(6,7)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(7,8)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(8,9)}</div>
+            <div className="ScripturePanel-dateCard">{this.props.date.substring(9,10)}</div>
 
 
           </div>
@@ -166,7 +153,7 @@ class ScripturePanel extends Component {
           {scriptureBox}
           <div className="ScripturePanel-setScriptureButton"onClick={this.toggleModal}>Set Scripture</div>
           </div>
-          <CommentsArea date={this.state.date} userId={this.props.userId}/>
+          <CommentsArea date={this.props.date} userId={this.props.userId}/>
           </div>
       </div>
       
