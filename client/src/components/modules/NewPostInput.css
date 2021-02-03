@@ -1,0 +1,30 @@
+.NewPostInput-input,
+.NewPostInput-button {
+  font-family: "Open Sans";
+  font-size: 14px;
+  padding: var(--s) var(--m);
+}
+
+.NewPostInput-input {
+  flex-grow: 1;
+  border:  1px solid;
+  border-radius: var(--xs) 0 0 var(--xs);
+  transition: box-shadow 0.1s;
+}
+
+.NewPostInput-input:focus-within {
+  /*border-color: var(--secondary--light);*/
+  box-shadow: 0 0 0 var(--xs) rgba(255, 0, 0, 0.25);
+}
+
+.NewPostInput-button {
+  color: var(--white);
+  border: var(--primary) 1px solid;
+  border-radius: 0 var(--xs) var(--xs) 0;
+  background-color: var(--secondary);
+}
+
+.NewPostInput-button:hover {
+  color: var(--white);
+  background-color: var(--secondary-light);
+}

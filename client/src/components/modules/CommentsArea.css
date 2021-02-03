@@ -1,0 +1,41 @@
+.CommentsArea-mainContainer {
+  background-color: #efefef;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.CommentsArea-allComments {
+  background-color: #efefef;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.CommentsArea-comment {
+  background-color: var(--white);
+  max-width: 90%;
+  padding: 10px;
+  margin-bottom: 4px;
+}
+
+.Comment-name {
+  font-size: var(--m);
+  font-weight: 600;
+}
+
+.Comment-content {
+  margin-left: 20px;
+}
+
+.CommentsArea-newCommentContainer {
+  width: 90%;
+  display: flex; 
+  padding: 10px; 
+}

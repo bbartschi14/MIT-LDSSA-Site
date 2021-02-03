@@ -1,0 +1,15 @@
+.Hero-mainContainer {
+  background-image: linear-gradient(to bottom right, var(--secondary), var(--secondary-light));
+  width: 100%;
+  height: 600px;
+  border-radius: 20px 20px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Hero-text {
+  font-size: var(--xl);
+  color: white;
+  max-width: 800px;
+}

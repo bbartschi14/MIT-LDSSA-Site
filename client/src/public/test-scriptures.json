@@ -1,0 +1,20 @@
+[{
+    "volume_title": "Old Testament",
+    "book_title": "Genesis",
+    "book_short_title": "Gen.",
+    "chapter_number": 1,
+    "verse_number": 1,
+    "verse_title": "Genesis 1:1",
+    "verse_short_title": "Gen. 1:1",
+    "scripture_text": "In the beginning God created the heaven and the earth."
+},
+{
+    "volume_title": "Book of Mormon",
+    "book_title": "Alma",
+    "book_short_title": "Alma",
+    "chapter_number": 48,
+    "verse_number": 3,
+    "verse_title": "Alma 48:3",
+    "verse_short_title": "Alma 48:3",
+    "scripture_text": "Therefore he had accomplished his design, for he had hardened the hearts of the Lamanites and blinded their minds, and stirred them up to anger, insomuch that he had gathered together a numerous host to go to battle against the Nephites."
+}]

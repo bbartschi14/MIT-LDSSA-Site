@@ -1,0 +1,7 @@
+.App-container {
+  max-width: 1340px;
+  margin: auto;
+  background-color: #efefef;
+  border-radius: 20px 20px 0px 0px;
+  box-shadow: 0px 0px 15px var(--darkbackground);
+}
