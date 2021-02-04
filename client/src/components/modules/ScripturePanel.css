@@ -171,13 +171,6 @@
 }
 
 
-.SetScripture-submitButton {
-  color: white;
-  padding: 6px 20px;
-  background-color: var(--secondary);
-  max-width: 200px;
-  border-radius: 10px;
-}
 
 
 .SetScripture-closeButton {
@@ -194,6 +187,14 @@
 .SetScripture-closeButton:hover {
   background-color: var(--secondary-light);
   cursor: pointer;
+}
+
+.SetScripture-submitButton {
+  color: white;
+  padding: 6px 20px;
+  background-color: var(--secondary);
+  max-width: 200px;
+  border-radius: 10px;
 }
 
 .SetScripture-submitButton:hover {

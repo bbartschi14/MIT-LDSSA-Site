@@ -34,7 +34,7 @@ class Home extends Component {
       <>
         <Hero/>
         <ScripturePanel userId={this.props.userId} date={date}/>
-        <Activities/>
+        <Activities userId={this.props.userId} userStatus={this.props.userStatus}/>
         
       </>
     );

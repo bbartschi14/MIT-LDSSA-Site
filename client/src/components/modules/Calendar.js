@@ -105,17 +105,20 @@ class Calendar extends Component {
     else if (day.date === this.state.today) {
       //dayElementClassList.add("");
     }
-    let color;
+    let style;
     this.props.filters.map((filter) => {
       if (filter.title == this.props.active_selection) {
-        if (WEEKDAYS[this.getWeekday(day.date)-1 % 6] == filter.dayOfWeek) {
-          color = filter.color;
+        if ((WEEKDAYS[this.getWeekday(day.date)-1 % 6] == filter.dayOfWeek && filter.dayOfWeek) || filter.days.includes(day.date)) {
+          if (this.state.dayjs(day.date).isBefore(filter.endDate) || !filter.endDate) {
+            if (this.state.dayjs(day.date).isAfter(filter.startDate) || !filter.startDate)
+              style = filter.style;
+          }
         }
       }
       
     });
 
-    return (<li className={classList} style={{backgroundColor:color}} key={`day_${day.date}`}><span >{day.dayOfMonth}</span></li>);
+    return (<li className={classList} style={style} key={`day_${day.date}`}><span >{day.dayOfMonth}</span></li>);
   }
 
   subtractMonth = () => {

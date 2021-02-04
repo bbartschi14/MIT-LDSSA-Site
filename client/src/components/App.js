@@ -22,6 +22,7 @@ class App extends Component {
     this.state = {
       userId: undefined,
       userName: undefined,
+      userStatus: undefined
     };
   }
 
@@ -30,7 +31,8 @@ class App extends Component {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         this.setState({ userId: user._id,
-                        userName: user.name });
+                        userName: user.name,
+                        userStatus: user.status });
       }
     });
   }
@@ -40,8 +42,10 @@ class App extends Component {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       console.log(user.name)
+
       this.setState({ userId: user._id,
-                     userName: user.name});
+                     userName: user.name,
+                      userStatus: user.status});
       post("/api/initsocket", { socketid: socket.id });
     });
   };
@@ -63,11 +67,13 @@ class App extends Component {
           handleLogout={this.handleLogout}
           userId={this.state.userId}
           userName={this.state.userName} 
+          userStatus={this.state.userStatus}
         />
         <div className="App-container">
           <Router>
             <Home path="/" 
                   userId={this.state.userId} 
+                  userStatus={this.state.userStatus}
             />
             <NotFound default />
           </Router>

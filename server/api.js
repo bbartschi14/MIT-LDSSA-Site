@@ -12,6 +12,7 @@ const express = require("express");
 // import models so we can interact with the database
 const Story = require("./models/story");
 const Comment = require("./models/comment");
+const Activity = require("./models/activity");
 const User = require("./models/user");
 const Message = require("./models/message");
 
@@ -54,6 +55,35 @@ router.post("/comment", auth.ensureLoggedIn, (req, res) => {
 
   newComment.save().then((comment) => res.send(comment));
 });
+
+
+router.get("/activities", (req, res) => {
+  // empty selector means get all documents
+  Activity.find({}).then((activities) => res.send(activities));
+});
+
+
+router.get("/activity/delete", (req, res) => {
+  Activity.deleteOne({_id:req.query._id}).then((activities) => res.send(activities));
+});
+
+
+router.post("/activity", (req, res) => {
+  console.log("Posting activity " + req);
+  const newActivity = new Activity({
+    title: req.body.title,
+    description: req.body.description,
+    time: req.body.time,
+    dayOfWeek: req.body.dayOfWeek,
+    style: req.body.style,
+    days: req.body.days,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate
+  });
+
+  newActivity.save().then((activity) => res.send(activity));
+});
+
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
