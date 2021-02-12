@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import NavBar from "./modules/NavBar.js";
 import { Router } from "@reach/router";
 import Home from "./pages/Home.js";
+import ScriptureForm from "./pages/ScriptureForm.js";
+
 import NotFound from "./pages/NotFound.js";
 
 import { socket } from "../client-socket.js";
@@ -74,6 +76,9 @@ class App extends Component {
             <Home path="/" 
                   userId={this.state.userId} 
                   userStatus={this.state.userStatus}
+            />
+            <ScriptureForm path="/scripture-form" userId={this.state.userId} 
+            
             />
             <NotFound default />
           </Router>

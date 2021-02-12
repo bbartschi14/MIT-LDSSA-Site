@@ -52,6 +52,7 @@
   flex-direction: column;
   max-width: 60%;
   align-items: center;
+  width: 60%;
 }
 
 .ScripturePanel-scripture {
@@ -79,6 +80,18 @@
   
 }
 
+.ScripturePanel-reflection-text {
+  margin: 10px 0px;
+  font-size: var(--m);
+  
+}
+
+.ScripturePanel-reflection-title {
+  margin: 10px 0px;
+  font-size: var(--m);
+  
+}
+
 .ScripturePanel-verse-title {
   margin: 10px 0px;
   font-size: var(--m2);
@@ -99,6 +112,9 @@
   background-color: var(--secondary);
   border-radius: 15px;
   box-shadow: 0px 0px 10px rgb(128, 128, 128);
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
 
 .ScripturePanel-setScriptureButton:hover {
@@ -118,6 +134,7 @@
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
 .SetScripture-modal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -160,14 +177,17 @@
 .SetScripture-inputBox {
   font-family: inherit;
   font-size: var(--l);
-  margin-left: 20px;
 }
 .SetScripture-heading {
   font-weight: 600;
+  margin-top: 12px;
 }
 .SetScripture-sampleText {
-  margin: 10px 0px 20px 0px;
+  margin: 8px 0px 8px 0px;
   font-style: italic;
+  padding: 8px;
+  border: 2px solid var(--medgrey);
+  max-width: 600px;
 }
 
 
@@ -209,4 +229,8 @@
   background-color: var(--secondary);
   max-width: 200px;
   border-radius: 10px;
+}
+.Label {
+  font-size: var(--l);
+  margin-right: 16px;
 }

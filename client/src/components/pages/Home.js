@@ -28,12 +28,25 @@ class Home extends Component {
     
   };
 
+  getYearDate = () => {
+    var date = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+    var dateArray = date.split("/");
+    var year = dateArray[2].substring(0,4);
+    var day = dateArray[1].padStart(2, "0");
+    var month = dateArray[0].padStart(2, "0");
+
+    
+    return year+"-"+month+"-"+day
+    
+  };
+
   render() {
     var date = this.getDate();
+    var yearDate = this.getYearDate();
     return (
       <>
         <Hero/>
-        <ScripturePanel userId={this.props.userId} date={date}/>
+        <ScripturePanel userId={this.props.userId} date={date} yearDate={yearDate}/>
         <Activities userId={this.props.userId} userStatus={this.props.userStatus}/>
         
       </>

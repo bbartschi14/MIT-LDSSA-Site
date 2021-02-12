@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./ScripturePanel.css";
 import "./CommentsArea.js";
+import { Link } from "@reach/router";
+import { get, post } from "../../utilities";
 
 import scriptures from "../../public/lds-scriptures-json.json"
 import CommentsArea from "./CommentsArea.js";
@@ -11,59 +13,16 @@ class ScripturePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentScripture:null,
-      modalActive:false,
-      scriptureName:"",
-      validScripture:false,
-      scriptureText:null,
+      sotd:null,
+
     };
-    this.toggleModal = this.toggleModal.bind(this);
-    this.setScripture = this.setScripture.bind(this);
-    this.scriptureInputChanged = this.scriptureInputChanged.bind(this);
     this.getScripture = this.getScripture.bind(this);
-    this.formatScriptureName = this.formatScriptureName.bind(this);
-    this.submitScripture = this.submitScripture.bind(this);
-    this.enterPressed = this.enterPressed.bind(this);
-  }
-
-  toggleModal() {
-    this.setState({modalActive : !this.state.modalActive})
-  }
-
-  submitScripture() {
-    if (this.state.validScripture) {
-      this.setScripture(this.state.scriptureName)
-      this.toggleModal()
-    }
-  }
-
-  scriptureInputChanged(event) {
-    var scrip = this.getScripture(event.target.value)
-    this.setState({scriptureName:event.target.value})
-    if (scrip) {
-      this.setState({validScripture:true,
-                    scriptureText:scrip.scripture_text})
-    } else {
-      this.setState({validScripture:false,
-        scriptureText:null})
-    }
-  }
-
-  enterPressed(event) {
-    var code = event.keyCode || event.which;
-    if(code === 13) { 
-        event.preventDefault();
-        this.submitScripture();
-    } 
-  }
-
-  setScripture(scriptureName) {
-    this.setState({currentScripture : this.getScripture(scriptureName)})
   }
 
   getScripture(scriptureName) {
     for (var i = 0; i < scriptures.length; i++) {
       if (scriptures[i].verse_title == scriptureName) {
+        console.log(scriptures[i])
         return scriptures[i]
         //console.log(`seconds elapsed = ${((Date.now()-start) / 1000)}`);
       }
@@ -71,65 +30,41 @@ class ScripturePanel extends Component {
     return null
   }
 
-  formatScriptureName(book, chapter, verse) {
-    return book + " " + chapter + ":" + verse
-  }
-
-  
   componentDidMount() {
     let verse = "1 Nephi 3:7"
-    //const start = Date.now();
-    this.setScripture(verse);
+    console.log("getting sotd")
+    get("/api/sotd", { date: this.props.yearDate }).then((sotd) => {
+      console.log(sotd)
+      this.setState({sotd:sotd[0]})
+    });
   }
 
   render() {
     var scriptureBox = null
-    if (!this.state.currentScripture) {
+    var currentScripture = this.getScripture(this.state.sotd?.verse)
+    if (!currentScripture) {
       scriptureBox = <div className="ScripturePanel-scripture">No Scripture found</div>
     } else {
       scriptureBox = 
+      
         <div className="ScripturePanel-scripture">
           <div className="ScripturePanel-scriptureContainer">
-          <div className="ScripturePanel-verse-text">{"\""+this.state.currentScripture.scripture_text+"\""}</div>
-          <div className="ScripturePanel-verse-title"> {this.state.currentScripture.verse_title}</div>
+            <div className="ScripturePanel-verse-text">{"\""+currentScripture.scripture_text+"\""}</div>
+            <div className="ScripturePanel-verse-title"> {currentScripture.verse_title}</div>
           </div>
-         
+          <div className="ScripturePanel-scriptureContainer" style={{marginTop:"12px"}}>
+            <div className="ScripturePanel-reflection-text">{this.state.sotd?.reflection}</div>
+            <div className="ScripturePanel-reflection-title"> {this.state.sotd?.creator_name}</div>
+
+          </div>
         </div>
+
+        
     }
-
-   var displayText = this.state.scriptureText
-   var headingText = null
-
-   var buttonClass = "SetScripture-submitButton"
-   if (!displayText) {
-    headingText = "No scripture match"
-    buttonClass = "SetScripture-submitButtonInactive"
-   } else {
-    headingText = "Scripture found:"
-   }
 
     return (
       <>
       <div className="ScripturePanel-mainContainer">
-
-          <div className={this.state.modalActive ? "SetScripture-modal" : "SetScripture-modalHidden"} ref={modal => this.modal = modal}>
-              <div className="SetScripture-modalContent">
-                  <div className="SetScripture-closeButton" onClick={this.toggleModal}>X</div>
-                  <form className="SetScripture-modalForm">
-                    <div className="SetScripture-modalRow"> 
-                      <label className='Label'>
-                      Search for a scripture:
-                      </label>
-                      <input className="SetScripture-inputBox" maxLength="30" type="text" value={this.state.scriptureName} onKeyPress={this.enterPressed} onChange={this.scriptureInputChanged} />
-                    </div>
-                    <div className="SetScripture-heading">{headingText}</div>
-
-                    <div className="SetScripture-sampleText">{displayText}</div>
-                    <span className={buttonClass} onClick={this.submitScripture}>Submit</span>
-                  </form>
-                  
-              </div>
-          </div>
 
           <div className="ScripturePanel-dateCardContainer">
             <div className="ScripturePanel-dateCard">{this.props.date.substring(0,1)}</div>
@@ -149,13 +84,17 @@ class ScripturePanel extends Component {
           </div>
           <div className="ScripturePanel-title">Scripture of the Day</div>
           <div className="ScripturePanel-horizontalContainer">
-          <div className="ScripturePanel-verticalContainer">
-          {scriptureBox}
-          <div className="ScripturePanel-setScriptureButton"onClick={this.toggleModal}>Set Scripture</div>
+            <div className="ScripturePanel-verticalContainer">
+            {scriptureBox} 
+            </div>
+            <CommentsArea date={this.props.date} userId={this.props.userId}/>
+           
           </div>
-          <CommentsArea date={this.props.date} userId={this.props.userId}/>
-          </div>
+          <Link to="/scripture-form" className="ScripturePanel-setScriptureButton">
+            Set Scripture
+          </Link>
       </div>
+      
       
       </>
     );

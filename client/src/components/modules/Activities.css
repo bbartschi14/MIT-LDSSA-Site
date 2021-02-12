@@ -201,3 +201,17 @@
   opacity: 0;
   transition: opacity 0.3s;
 }
+
+.Activities-addDateButton {
+  color: white;
+  padding: 3px 10px;
+  background-color: var(--secondary);
+  max-width: 200px;
+  border-radius: 10px;
+}
+
+.Activities-addDateButton:hover {
+  cursor: pointer;
+  background-color: var(--secondary-light);
+
+}

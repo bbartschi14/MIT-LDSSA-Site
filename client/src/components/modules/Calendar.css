@@ -29,6 +29,7 @@ ol, li {
   justify-content: space-between;
   background-color: #fff;
   padding: 10px;
+  color: var(--grey-800);
 }
 
 .Calendar-selectedMonth {
@@ -91,6 +92,19 @@ ol, li {
 .Calendar-notCurrent {
   background-color: var(--grey-100);
   color: var(--grey-300);
+}
+
+.Calendar-available:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.Calendar-unavailable {
+  background-color: rgb(248, 175, 175);
+}
+
+.Calendar-selected {
+  background-color: rgb(189, 255, 189);
 }
 
 .Calendar-day > span {

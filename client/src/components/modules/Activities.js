@@ -16,8 +16,12 @@ class Activities extends Component {
       newName:"",
       newDescription:"",
       newTime:"",
-      newRecurring:"Mon",
-      newColor:"#000000"
+      newRecurring:"None",
+      newColor:"#000000",
+      newStartDate:"",
+      newEndDate:"",
+      newDates:[],
+      newDate:""
 
     };
     this.openCreateModal = this.openCreateModal.bind(this);
@@ -27,6 +31,11 @@ class Activities extends Component {
     this.onChangeTime = this.onChangeTime.bind(this);
     this.onChangeRecurring = this.onChangeRecurring.bind(this);
     this.onChangeColor = this.onChangeColor.bind(this);
+    this.onChangeStartDate = this.onChangeStartDate.bind(this);
+    this.onChangeEndDate = this.onChangeEndDate.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
+    this.addDate = this.addDate.bind(this);
+
     this.submitActivity = this.submitActivity.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
@@ -46,7 +55,10 @@ class Activities extends Component {
       description:this.state.newDescription,
       time:this.state.newTime,
       dayOfWeek:this.state.newRecurring,
-      style:{backgroundColor:this.state.newColor}
+      style:{backgroundColor:this.state.newColor},
+      startDate: this.state.newStartDate,
+      endDate: this.state.newEndDate,
+      days:this.state.newDates
     };
 
     post("/api/activity", activ).then((activity) => {
@@ -89,6 +101,28 @@ class Activities extends Component {
     this.setState({newColor: event.target.value});
   }
 
+  onChangeStartDate(event) {
+    console.log(event.target.value)
+    this.setState({newStartDate: event.target.value});
+  }
+
+  onChangeEndDate(event) {
+    this.setState({newEndDate: event.target.value});
+  }
+
+  onChangeDate(event) {
+    this.setState({newDate: event.target.value});
+  }
+  
+  addDate() {
+    console.log("Adding"+this.state.newDate)
+    this.setState({
+      newDates: this.state.newDates.concat([this.state.newDate]),
+    });
+  }
+
+
+
  componentDidMount() {
     get("/api/activities").then((activs) => {
       this.setState({
@@ -120,14 +154,15 @@ activeSelection = (title) => {
     activitiesPanels = this.state.activities.map((activ) => {
       let style;
       if (this.activeSelection() == activ.title) style = activ.style
-
+      let mod = this.props.userStatus == "Moderator";
       return (
       <div className="Activities-indivContainer"  key={`${activ.title}`}>
+          {mod ? 
           <div className="Icon-wrapper" onClick={() => this.handleDelete(activ._id)}>    
             <span className="Icon-tooltip">Delete</span>
             <i className="fa fa-trash"></i>
           </div>
-
+          : null}
           <div className="Activities-indivPanel" 
           name={activ.title}
           style={style}
@@ -136,7 +171,7 @@ activeSelection = (title) => {
           onClick={this.onActivityClick}>
             <div className="Activities-indivTitle">{activ.title}</div>
             <div className="Activities-indivDescription">{activ.description}</div>
-            <div className="Activities-indivDay">{activ.dayOfWeek} {activ.time}</div>
+            <div className="Activities-indivDay">{activ.dayOfWeek=="None" ? undefined : activ.dayOfWeek} {activ.time}</div>
           </div>
         </div>)
       
@@ -144,10 +179,28 @@ activeSelection = (title) => {
     })
 
   let createActivity;
-  if (this.props.userStatus != "Moderator") {
+  if (this.props.userStatus == "Moderator") {
     createActivity = <div className="Activities-createActivity" onClick={this.openCreateModal}>Create Activity</div>
   }
   var buttonClass = "Activities-submitButton"
+
+  var recurringDates;
+  if (this.state.newRecurring != "None") {
+    recurringDates=<><div className="Activities-modalRow"> 
+                      <label>
+                      Recurring From:
+                      </label>
+                      <input className="Activities-inputBox"type="date" value={this.state.newStartDate} onChange={this.onChangeStartDate}/>
+                    </div><div className="Activities-modalRow"> 
+                  <label>
+                  Recurring Until:
+                  </label>
+                  <input className="Activities-inputBox"type="date" value={this.state.newEndDate} onChange={this.onChangeEndDate}/>
+                </div>
+                </>
+  }
+
+  var newDateList = this.state.newDates.map((date) => (<div>{date}</div>))
 
     return (
       <>
@@ -173,10 +226,20 @@ activeSelection = (title) => {
                   </label>
                   <input className="Activities-inputBox"type="text" value={this.state.newTime} onChange={this.onChangeTime}/>
                 </div>
+                <div className="Activities-modalRow"> 
+                  <label>
+                  Date:
+                  </label>
+                  <input className="Activities-inputBox"type="date" value={this.state.newDate} onChange={this.onChangeDate}/>
+                  <span className="Activities-addDateButton" onClick={this.addDate}>Add</span>
+                </div>
+               {newDateList}
+                
                 <div className="Activities-modalRow">
                   <label>
                     Recurring day:
                     <select className="Activities-selectBox" value={this.state.newRecurring} onChange={this.onChangeRecurring}>
+                      <option value="None">None</option>
                       <option value="Mon">Mon</option>
                       <option value="Tue">Tue</option>
                       <option value="Wed">Wed</option>
@@ -187,6 +250,7 @@ activeSelection = (title) => {
                     </select>
                   </label>
                 </div>
+                {recurringDates}
                 <div className="Activities-modalRow"> 
                   <label>Color</label>
                   <input type="color" value={this.state.newColor} onChange={this.onChangeColor}/>

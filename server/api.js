@@ -10,7 +10,7 @@
 const express = require("express");
 
 // import models so we can interact with the database
-const Story = require("./models/story");
+const SOTD = require("./models/sotd");
 const Comment = require("./models/comment");
 const Activity = require("./models/activity");
 const User = require("./models/user");
@@ -29,14 +29,27 @@ router.get("/stories", (req, res) => {
   Story.find({}).then((stories) => res.send(stories));
 });
 
-router.post("/story", auth.ensureLoggedIn, (req, res) => {
-  const newStory = new Story({
+router.post("/sotd", auth.ensureLoggedIn, (req, res) => {
+  const newSOTD = new SOTD({
     creator_id: req.user._id,
     creator_name: req.user.name,
-    content: req.body.content,
+    verse: req.body.verse,
+    reflection: req.body.reflection,
+    date: req.body.date
   });
 
-  newStory.save().then((story) => res.send(story));
+  newSOTD.save().then((sotd) => res.send(sotd));
+});
+
+router.get("/sotd", (req, res) => {
+  SOTD.find({ date: req.query.date }).then((sotd) => {
+    res.send(sotd);
+  });
+});
+
+router.get("/sotds", (req, res) => {
+  // empty selector means get all documents
+  SOTD.find({}).then((sotds) => res.send(sotds));
 });
 
 router.get("/comment", (req, res) => {

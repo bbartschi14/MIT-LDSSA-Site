@@ -30,9 +30,6 @@ class NavBar extends Component {
           <Link to="/" className="NavBar-link">
             Home
           </Link>
-          <Link to="/" className="NavBar-link">
-            About
-          </Link>
           
           {this.props.userId ? (
             <GoogleLogout
