@@ -15,7 +15,8 @@ class ScriptureForm extends Component {
       reflectionText:"",
       selected_day:"",
       datesTaken:undefined,
-      modalActive:false
+      modalActive:false,
+      failed:false
     };
     this.scriptureInputChanged = this.scriptureInputChanged.bind(this);
     this.getScripture = this.getScripture.bind(this);    
@@ -23,6 +24,8 @@ class ScriptureForm extends Component {
     this.reflectionInputChanged = this.reflectionInputChanged.bind(this);
     this.setDay = this.setDay.bind(this);
     this.submitPost = this.submitPost.bind(this);
+    this.postFailed = this.postFailed.bind(this);
+    this.pickNew = this.pickNew.bind(this);
 
   }
 
@@ -71,6 +74,19 @@ class ScriptureForm extends Component {
     this.setState({selected_day:day})
   }
 
+  postFailed() {
+    this.setState({failed:true, selected_day:""})
+    get("/api/sotds").then((sotds) => {
+      var newArray = sotds.map((sotd) => sotd.date)
+      this.setState({datesTaken:newArray});
+    });
+  }
+
+  pickNew() {
+    this.setState({modalActive:false,
+                  failed:false})
+  }
+
   submitPost() {
     if (!this.state.validScripture 
       || !this.state.reflectionText.length > 0 
@@ -81,14 +97,22 @@ class ScriptureForm extends Component {
       reflection: this.state.reflectionText,
       date: this.state.selected_day
     };
-
-    post("/api/sotd", body).then((sotd) => {
-      this.setState({
-        selected_day:"",
-        datesTaken: this.state.datesTaken.concat([sotd.date]),
-        scriptureSubmitted:true
-      });
+    get("/api/sotd", { date: body.date }).then((s) => {
+      console.log("Checking if date exists" + s)
+      if (s.length == 0) {
+        console.log("Posting")
+        post("/api/sotd", body).then((sotd) => {
+          this.setState({
+            selected_day:"",
+            datesTaken: this.state.datesTaken.concat([sotd.date]),
+            scriptureSubmitted:true
+          });
+        });
+      } else {
+        this.postFailed()
+      }
     });
+   
 
   }
 
@@ -118,6 +142,9 @@ class ScriptureForm extends Component {
     if (this.state.scriptureSubmitted) {
       modalText = "Scripture submitted!"
     }
+    if (this.state.failed) {
+      modalText = "Post failed, day already taken"
+    }
 
     return (
       <>
@@ -125,7 +152,8 @@ class ScriptureForm extends Component {
         <div className={this.state.modalActive ? "SetScripture-modal" : "SetScripture-modalHidden"} ref={modal => this.modal = modal}>
             <div className="SetScripture-modalContent">
                 <div style={{marginBottom:"24px"}}>{modalText}</div>
-                <Link to="/" className="SetScripture-submitButton" >Return Home</Link>
+                {this.state.failed ? <span className="SetScripture-submitButton" onClick={this.pickNew}>Pick New Day</span> : 
+                <Link to="/" className="SetScripture-submitButton" >Return Home</Link>}
             </div>
         </div>
 
