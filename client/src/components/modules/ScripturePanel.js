@@ -66,6 +66,8 @@ class ScripturePanel extends Component {
       <>
       <div className="ScripturePanel-mainContainer">
 
+          
+          <div className="ScripturePanel-title">Scripture of the Day</div>
           <div className="ScripturePanel-dateCardContainer">
             <div className="ScripturePanel-dateCard">{this.props.date.substring(0,1)}</div>
             <div className="ScripturePanel-dateCard">{this.props.date.substring(1,2)}</div>
@@ -82,7 +84,6 @@ class ScripturePanel extends Component {
 
 
           </div>
-          <div className="ScripturePanel-title">Scripture of the Day</div>
           <div className="ScripturePanel-horizontalContainer">
             <div className="ScripturePanel-verticalContainer">
             {scriptureBox} 

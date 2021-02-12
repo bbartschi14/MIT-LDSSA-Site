@@ -23,7 +23,7 @@ class NavBar extends Component {
     return (
       <nav className="NavBar-container">
         <div className="NavBar-title u-inlineBlock">MIT LDSSA</div>
-        <Link to="/" className="NavBar-link">
+        <Link to="/" className="NavBar-link" style={{fontSize:"18px"}}>
             {welcome}
           </Link>
         <div className="NavBar-linkContainer u-inlineBlock">

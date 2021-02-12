@@ -130,6 +130,16 @@ class ScriptureForm extends Component {
         </div>
 
         <div className="Form-mainContainer">
+          <div className="Form-help">
+            Currently, scripture search queries must match official names and formatting. For example:
+            <ul className="bullets">
+              <li>1 Nephi 3:7</li>
+              <li>Doctrine and Covenants 4:1</li>
+              <li>John 3:5</li>
+              <li>Joseph Smith--History 1:17</li>
+            </ul>
+
+          </div>
           <div className="Form-pickScripture">
             <h1>1. Choose a Scripture</h1>
               <form style={{marginLeft:"24px"}}>

@@ -6,6 +6,7 @@
   color: white;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .Form-pickScripture {
@@ -39,4 +40,24 @@
 .Form-submitPostButton:hover {
   opacity: .7;
   cursor: pointer;
+}
+
+.Form-help {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  max-width: 250px;
+  border: 2px solid var(--medgrey);
+  padding: 8px;
+
+}
+
+.bullets {
+  margin-block-start: .25em;
+  margin-block-end: .25em;
+  padding-inline-start: 24px;
+}
+
+.bullets > li {
+  list-style-type: circle ;
 }
